@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 상세</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+
+    .box {
+      width: 500px;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 6px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .row {
+      margin-bottom: 10px;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .btn {
+      padding: 6px 10px;
+      background: #333;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #555;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+  <h2>게시글 상세</h2>
+
+  <div class="row">
+    <span class="label">번호:</span>
+    <span th:text="${board.id}"></span>
+  </div>
+
+  <div class="row">
+    <span class="label">제목:</span>
+    <span th:text="${board.title}"></span>
+  </div>
+
+  <div class="row">
+    <span class="label">내용:</span>
+    <div th:text="${board.content}"></div>
+  </div>
+
+  <div class="row">
+    <span class="label">작성자:</span>
+    <span th:text="${board.writer}"></span>
+  </div>
+
+  <a th:href="@{/board/edit/{id}(id=${board.id})}" class="btn">수정</a>
+  <form th:action="@{/board/delete/{id}(id=${board.id})}" method="post">
+    <button type="submit" class="btn">삭제</button>
+  </form>
+  <a href="/board" class="btn">목록으로</a>
+
+</div>
+
+</body>
+</html>
