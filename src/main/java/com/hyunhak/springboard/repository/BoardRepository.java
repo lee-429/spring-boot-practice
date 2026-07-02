@@ -15,7 +15,7 @@ public interface BoardRepository {
     Board findById(Long id);
 
     // 게시글 수정
-    Board update(Board board);
+    Board update(Long id, Board board);
 
     // 게시글 삭제
     void delete(Long id);
