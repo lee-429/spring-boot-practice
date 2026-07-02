@@ -4,7 +4,7 @@ import com.hyunhak.springboard.domain.Board;
 import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository // 데이터(DB/메모리) 접근 계층이라는 걸 Spring에 알려줌 (Repository 역할)
 public class MemoryBoardRepository implements BoardRepository {
 
     // 1. board를 저장할 공간을 하나 만든다.
@@ -13,7 +13,7 @@ public class MemoryBoardRepository implements BoardRepository {
     // 2. id 변수를 만든다.
     private Long id = 0L;
 
-    // 3. 게시글 저장
+    // 게시글 저장
     @Override
     public Board save(Board board) {
 
@@ -23,13 +23,13 @@ public class MemoryBoardRepository implements BoardRepository {
         return board;
     }
 
-    // 4. 게시글 전체 조회
+    // 게시글 전체 조회
     @Override
     public ArrayList<Board> findAll() {
         return boardList;
     }
 
-    // 5. 게시글 ID 별 조회
+    // 게시글 ID 별 조회
     @Override
     public Board findById(Long id) {
 
@@ -46,7 +46,7 @@ public class MemoryBoardRepository implements BoardRepository {
         return null;
     }
 
-    // 6. 게시글 수정
+    // 게시글 수정
     @Override
     public Board update(Long id, Board board) {
 
@@ -63,7 +63,7 @@ public class MemoryBoardRepository implements BoardRepository {
         return null;
     }
 
-    // 7. 게시글 삭제
+    // 게시글 삭제
     @Override
     public void delete(Long id) {
 
