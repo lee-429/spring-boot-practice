@@ -4,10 +4,12 @@ import com.hyunhak.springboard.dto.BoardCreateDto;
 import com.hyunhak.springboard.dto.BoardResponseDto;
 import com.hyunhak.springboard.dto.BoardUpdateDto;
 import com.hyunhak.springboard.service.BoardService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,8 +51,14 @@ public class BoardController {
 
     // 게시글 저장
     @PostMapping("/board")
-    public String save(BoardCreateDto dto) {
+    public String save(@Valid BoardCreateDto dto, BindingResult bindingResult) {
 
+        // 검증 실패 시 작성 페이지 반환
+        if (bindingResult.hasErrors()) {
+            return "board/write";
+        }
+
+        // 검증 성공 시 게시글 저장
         boardService.save(dto);
 
         return "redirect:/board";
@@ -79,8 +87,14 @@ public class BoardController {
 
     // 게시글 수정
     @PostMapping("/board/update/{id}")
-    public String update(@PathVariable Long id, BoardUpdateDto dto) {
+    public String update(@PathVariable Long id, @Valid BoardUpdateDto dto, BindingResult bindingResult) {
 
+        // 검증 실패 시 수정 페이지 반환
+        if (bindingResult.hasErrors()) {
+            return "board/edit";
+        }
+
+        // 검증 성공 시 게시글 수정
         boardService.update(id, dto);
 
         return "redirect:/board";
