@@ -1,6 +1,5 @@
 package com.hyunhak.springboard.repository;
 
-import com.hyunhak.springboard.entity.BoardEntity;
 import com.hyunhak.springboard.entity.CommentEntity;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

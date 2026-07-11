@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /* @RestController -> JSON 데이터 반환용 (화면 없고 데이터만 반환) */
@@ -47,10 +48,29 @@ public class BoardController {
     // 게시글 목록
     @GetMapping("/board")
     public String view(Model model,
+                       @RequestParam(required = false) String type,
+                       @RequestParam(required = false) String keyword,
                        @PageableDefault(size = 10, sort = "id", direction = Direction.DESC)
                        Pageable pageable) {
 
-        Page<BoardResponseDto> boardsList = boardService.findAll(pageable);
+        Page<BoardResponseDto> boardsList;
+
+        // 검색어가 없으면 전체 게시글 조회
+        if (keyword == null || keyword.isEmpty()) {
+            boardsList = boardService.findAll(pageable);
+
+        // 검색 종류가 제목이면 제목 검색
+        } else if ("title".equals(type)) {
+            boardsList = boardService.searchByTitle(keyword, pageable);
+
+        // 검색 종류가 작성자면 작성자 검색
+        } else if ("writer".equals(type)) {
+            boardsList = boardService.searchByWriter(keyword, pageable);
+
+        // 그 외에는 제목 + 내용 검색
+        } else {
+            boardsList = boardService.search(keyword, pageable);
+        }
 
         // 한 번에 보여줄 페이지 번호 개수
         int blockLimit = 10;
@@ -64,6 +84,8 @@ public class BoardController {
         model.addAttribute("boards", boardsList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
 
         return "board/list";
     }

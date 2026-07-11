@@ -136,4 +136,62 @@ public class BoardService {
         boardRepository.delete(entity);
     }
 
+    // 제목 검색
+    public Page<BoardResponseDto> searchByTitle(String keyword, Pageable pageable) {
+
+        // 제목에 keyword가 포함된 게시글을 조회 (페이징)
+        Page<BoardEntity> boardPage = boardRepository.findByTitleContaining(keyword, pageable);
+
+        // Entity → DTO 변환
+        return boardPage.map(board -> {
+            BoardResponseDto dto = new BoardResponseDto();
+
+            dto.setId(board.getId());
+            dto.setTitle(board.getTitle());
+            dto.setContent(board.getContent());
+            dto.setWriter(board.getWriter());
+
+            return dto;
+        });
+
+    }
+
+    // 작성자 검색
+    public Page<BoardResponseDto> searchByWriter(String keyword, Pageable pageable) {
+
+        // 작성자에 keyword가 포함된 게시글을 조회 (페이징)
+        Page<BoardEntity> boardPage = boardRepository.findByWriterContaining(keyword, pageable);
+
+        // Entity → DTO 변환
+        return boardPage.map(board -> {
+            BoardResponseDto dto = new BoardResponseDto();
+
+            dto.setId(board.getId());
+            dto.setTitle(board.getTitle());
+            dto.setContent(board.getContent());
+            dto.setWriter(board.getWriter());
+
+            return dto;
+        });
+    }
+
+    // 제목 + 내용 검색
+    public Page<BoardResponseDto> search(String keyword, Pageable pageable) {
+
+        // JPQL을 사용하여 제목 또는 내용에 keyword가 포함된 게시글을 조회 (페이징)
+        Page<BoardEntity> boardPage = boardRepository.search(keyword, pageable);
+
+        // Entity → DTO 변환
+        return boardPage.map(board -> {
+            BoardResponseDto dto = new BoardResponseDto();
+
+            dto.setId(board.getId());
+            dto.setTitle(board.getTitle());
+            dto.setContent(board.getContent());
+            dto.setWriter(board.getWriter());
+
+            return dto;
+        });
+    }
+
 }

@@ -16,6 +16,7 @@ public class SbbApplicationTests {
     @Autowired
     private MemberRepository memberRepository;
 
+    // 대용량 테스트 데이터 넣기
     @Test
     void testJpa() {
         for (int i = 1; i < 300; i++) {
