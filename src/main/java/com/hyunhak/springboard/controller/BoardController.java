@@ -3,6 +3,7 @@ package com.hyunhak.springboard.controller;
 import com.hyunhak.springboard.dto.BoardCreateDto;
 import com.hyunhak.springboard.dto.BoardResponseDto;
 import com.hyunhak.springboard.dto.BoardUpdateDto;
+import com.hyunhak.springboard.dto.CommentResponseDto;
 import com.hyunhak.springboard.entity.CommentEntity;
 import com.hyunhak.springboard.entity.MemberEntity;
 import com.hyunhak.springboard.service.BoardService;
@@ -125,7 +126,7 @@ public class BoardController {
         BoardResponseDto board = boardService.findById(id);
 
         // 해당 게시글의 댓글 조회
-        List<CommentEntity> comments = commentService.findByBoardId(id);
+        List<CommentResponseDto> comments = commentService.findByBoardId(id);
 
         model.addAttribute("board", board);
         model.addAttribute("comments", comments);

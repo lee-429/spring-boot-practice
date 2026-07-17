@@ -143,6 +143,10 @@
     <form th:action="@{/comments/{commentId}/edit(commentId=${comment.id})}"
           method="post">
 
+      <input type="hidden"
+             name="boardId"
+             th:value="${board.id}">
+
       <input type="text"
              name="content"
              th:value="${comment.content}">

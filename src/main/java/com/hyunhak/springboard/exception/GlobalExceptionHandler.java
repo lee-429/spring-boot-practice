@@ -42,6 +42,7 @@ public class GlobalExceptionHandler {
     public String handleForbiddenException(ForbiddenException e, Model model) {
 
         model.addAttribute("message", e.getMessage());
+        model.addAttribute("boardId", e.getBoardId());
 
         return "error/error";
     }
@@ -90,14 +91,4 @@ public class GlobalExceptionHandler {
 
         return "error/error";
     }
-
-    // InvalidPasswordException이 발생했을 때 실행되는 메서드
-    @ExceptionHandler(InvalidPasswordException.class)
-    public String handleInvalidPasswordException(InvalidPasswordException e, Model model) {
-
-        model.addAttribute("message", e.getMessage());
-
-        return "error/error";
-    }
-
 }

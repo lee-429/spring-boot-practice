@@ -1,5 +1,6 @@
 package com.hyunhak.springboard.dto;
 
+import com.hyunhak.springboard.entity.CommentEntity;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,4 +18,12 @@ public class CommentResponseDto {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    public CommentResponseDto(CommentEntity commentEntity) {
+        this.id = commentEntity.getId();
+        this.content = commentEntity.getContent();
+        this.writer = commentEntity.getWriter();
+        this.createdAt = commentEntity.getCreatedAt();
+        this.updatedAt = commentEntity.getUpdatedAt();
+    }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CommentController {
@@ -38,7 +39,11 @@ public class CommentController {
 
     // 댓글 수정
     @PostMapping("/comments/{commentId}/edit")
-    public String update(@PathVariable Long commentId, @Valid CommentUpdateDto dto, BindingResult bindingResult, HttpSession session) {
+    public String update(
+        @PathVariable Long commentId,
+        @Valid CommentUpdateDto dto,
+        BindingResult bindingResult,
+        HttpSession session) {
 
         if (bindingResult.hasErrors()) {
             return "board/detail";

@@ -1,6 +1,7 @@
 package com.hyunhak.springboard.service;
 
 import com.hyunhak.springboard.dto.CommentCreateDto;
+import com.hyunhak.springboard.dto.CommentResponseDto;
 import com.hyunhak.springboard.dto.CommentUpdateDto;
 import com.hyunhak.springboard.entity.BoardEntity;
 import com.hyunhak.springboard.entity.CommentEntity;
@@ -52,8 +53,16 @@ public class CommentService {
     }
 
     // 게시글 ID에 해당하는 댓글 목록 조회
-    public List<CommentEntity> findByBoardId(Long boardId) {
-        return commentRepository.findByBoardId(boardId);
+    public List<CommentResponseDto> findByBoardId(Long boardId) {
+        return commentRepository.findByBoardId(boardId)
+            // List<CommentEntity>를 Stream으로 변환하여 하나씩 처리할 수 있도록 함
+            .stream()
+
+            // 각 CommentEntity를 CommentResponseDto로 변환
+            .map(CommentResponseDto::new)
+
+            // // 변환된 결과를 다시 List<CommentResponseDto>로 만들어 반환
+            .toList();
     }
 
     // 댓글 수정
@@ -70,7 +79,7 @@ public class CommentService {
 
         // 댓글 작성자가 아니면 수정 불가
         if (!loginMember.getUsername().equals(entity.getWriter())) {
-            throw new ForbiddenException("작성자만 수정할 수 있습니다.");
+            throw new ForbiddenException("작성자만 수정할 수 있습니다.", entity.getBoard().getId());
         }
 
         entity.setContent(dto.getContent());
@@ -93,7 +102,7 @@ public class CommentService {
 
         // 댓글 작성자가 아니면 삭제 불가
         if (!loginMember.getUsername().equals(entity.getWriter())) {
-            throw new ForbiddenException("작성자만 삭제할 수 있습니다.");
+            throw new ForbiddenException("작성자만 삭제할 수 있습니다.", entity.getBoard().getId());
         }
 
         commentRepository.delete(entity);

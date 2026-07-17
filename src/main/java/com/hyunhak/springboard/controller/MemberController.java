@@ -66,7 +66,7 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/member/login")
-    public String login(@Valid LoginDto dto, BindingResult bindingResult, HttpServletRequest request) {
+    public String login(@Valid LoginDto dto, BindingResult bindingResult, HttpSession session) {
 
         // Validation 오류 확인
         if (bindingResult.hasErrors()) {
@@ -81,7 +81,6 @@ public class MemberController {
         }
 
         // 로그인 정보 세션 저장
-        HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 
         return "redirect:/board";

@@ -40,7 +40,7 @@ public class BoardService {
         board.setTitle(dto.getTitle());
         board.setContent(dto.getContent());
 
-        if (!dto.getFile().isEmpty()) {
+        if (dto.getFile() != null && !dto.getFile().isEmpty()) {
             String storedFileName = saveFile(dto.getFile());
 
             board.setStoredFileName(storedFileName);
@@ -116,7 +116,7 @@ public class BoardService {
 
         // 작성자 본인인지 확인
         if (!loginMember.getUsername().equals(entity.getWriter())) {
-            throw new ForbiddenException("작성자만 수정할 수 있습니다.");
+            throw new ForbiddenException("작성자만 수정할 수 있습니다.", entity.getId());
         }
 
         // DTO 값을 기존 엔티티에 덮어쓰기 (수정)
@@ -166,7 +166,7 @@ public class BoardService {
 
         // 작성자 본인인지 확인
         if (!loginMember.getUsername().equals(entity.getWriter())) {
-            throw new ForbiddenException("작성자만 삭제할 수 있습니다.");
+            throw new ForbiddenException("작성자만 삭제할 수 있습니다.", entity.getId());
         }
 
         // 첨부파일 삭제
