@@ -1,7 +1,7 @@
-package com.hyunhak.springboard.controller;
+package com.hyunhak.springboard.controller.web;
 
-import com.hyunhak.springboard.dto.CommentCreateDto;
-import com.hyunhak.springboard.dto.CommentUpdateDto;
+import com.hyunhak.springboard.dto.comment.CommentCreateDto;
+import com.hyunhak.springboard.dto.comment.CommentUpdateDto;
 import com.hyunhak.springboard.entity.CommentEntity;
 import com.hyunhak.springboard.entity.MemberEntity;
 import com.hyunhak.springboard.service.CommentService;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CommentController {

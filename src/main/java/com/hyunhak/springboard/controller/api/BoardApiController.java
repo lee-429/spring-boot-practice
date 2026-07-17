@@ -1,25 +1,26 @@
-package com.hyunhak.springboard.controller;
+package com.hyunhak.springboard.controller.api;
 
-import com.hyunhak.springboard.dto.BoardCreateDto;
-import com.hyunhak.springboard.dto.BoardResponseDto;
-import com.hyunhak.springboard.dto.BoardUpdateDto;
+import com.hyunhak.springboard.dto.board.BoardCreateDto;
+import com.hyunhak.springboard.dto.board.BoardResponseDto;
+import com.hyunhak.springboard.dto.board.BoardUpdateDto;
 import com.hyunhak.springboard.entity.BoardEntity;
 import com.hyunhak.springboard.entity.MemberEntity;
+import com.hyunhak.springboard.security.MemberPrincipal;
 import com.hyunhak.springboard.service.BoardService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,13 +72,15 @@ public class BoardApiController {
     }
 
     // 게시글 저장
-    @PostMapping
-    public BoardEntity save(@ModelAttribute @Valid BoardCreateDto dto, HttpSession session) {
+    @PostMapping(consumes = "multipart/form-data")
+    public BoardEntity save(
+        @ModelAttribute @Valid BoardCreateDto dto,
 
-        // 로그인 회원 조회
-        MemberEntity loginMember = (MemberEntity) session.getAttribute("loginMember");
+        // Authentication 객체에서 로그인 사용자 정보를 자동으로 가져와 주입
+        @AuthenticationPrincipal MemberPrincipal principal) {
 
-        return boardService.save(dto, loginMember);
+        // 인증 사용자 MemberEntity 추출 후 서비스 전달
+        return boardService.save(dto, principal.getMember());
     }
 
     // 게시글 상세 조회
@@ -96,21 +99,19 @@ public class BoardApiController {
     public BoardEntity update(
         @PathVariable Long id,
         @ModelAttribute @Valid BoardUpdateDto dto,
-        HttpSession session) {
+        @AuthenticationPrincipal MemberPrincipal principal) {
 
-        // 로그인 회원 조회
-        MemberEntity loginMember = (MemberEntity) session.getAttribute("loginMember");
-
-        return boardService.update(id, dto, loginMember);
+        // 인증 사용자 MemberEntity 추출 후 서비스 전달
+        return boardService.update(id, dto, principal.getMember());
     }
 
     // 게시글 삭제 (REST API에서는 삭제 요청에 DELETE 메서드를 사용)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id, HttpSession session) {
+    public void delete(
+        @PathVariable Long id,
+        @AuthenticationPrincipal MemberPrincipal principal) {
 
-        // 로그인 회원 조회
-        MemberEntity loginMember = (MemberEntity) session.getAttribute("loginMember");
-
-        boardService.delete(id, loginMember);
+        // 인증 사용자 MemberEntity 추출 후 서비스 전달
+        boardService.delete(id, principal.getMember());
     }
 }

@@ -1,4 +1,4 @@
-package com.hyunhak.springboard.dto;
+package com.hyunhak.springboard.dto.member;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

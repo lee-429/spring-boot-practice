@@ -1,14 +1,20 @@
 package com.hyunhak.springboard.service;
 
-import com.hyunhak.springboard.dto.LoginDto;
-import com.hyunhak.springboard.dto.MemberCreateDto;
+import com.hyunhak.springboard.dto.member.LoginDto;
+import com.hyunhak.springboard.dto.member.MemberCreateDto;
 import com.hyunhak.springboard.entity.MemberEntity;
 import com.hyunhak.springboard.exception.DuplicateLoginIdException;
 import com.hyunhak.springboard.exception.DuplicateUsernameException;
-import com.hyunhak.springboard.exception.LoginFailedException;
 import com.hyunhak.springboard.repository.MemberRepository;
+import com.hyunhak.springboard.security.MemberPrincipal;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service // 비즈니스 로직 계층이라는 걸 Spring에 알려줌 (Service 역할)
@@ -16,10 +22,19 @@ public class MemberService {
 
     // 생성자 주입 후 변경할 수 없도록 final 적용
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired // Spring이 자동으로 해당 타입의 객체(Bean)를 찾아서 주입해주는 기능
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(
+        MemberRepository memberRepository,
+        PasswordEncoder passwordEncoder,
+        AuthenticationManager authenticationManager) {
+
         this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+
     }
 
     // 회원가입
@@ -46,7 +61,7 @@ public class MemberService {
 
         // DTO의 회원 정보를 MemberEntity에 저장
         entity.setLoginId(dto.getLoginId());
-        entity.setPassword(dto.getPassword());
+        entity.setPassword(passwordEncoder.encode(dto.getPassword())); // 비밀번호 BCrypt 암호화 후 저장
         entity.setUsername(dto.getUsername());
 
         // 회원 정보를 DB에 저장
@@ -56,20 +71,28 @@ public class MemberService {
     // 로그인
     public MemberEntity login(LoginDto dto) {
 
-        // 입력받은 loginId로 회원 조회
-        Optional<MemberEntity> memberOpt = memberRepository.findByLoginId(dto.getLoginId());
+        // 로그인 인증 요청 생성
+        UsernamePasswordAuthenticationToken token =
+            new UsernamePasswordAuthenticationToken(
+                dto.getLoginId(),
+                dto.getPassword()
+            );
 
-        // 회원이 없으면 로그인 실패 예외 발생
-        MemberEntity member = memberOpt.orElseThrow(
-            () -> new LoginFailedException("로그인 정보가 올바르지 않습니다.")
-        );
+        // Spring Security 인증 수행
+        Authentication authentication = authenticationManager.authenticate(token);
 
-        // 비밀번호가 다르면 로그인 실패 예외 발생
-        if (!member.getPassword().equals(dto.getPassword())) {
-            throw new LoginFailedException("로그인 정보가 올바르지 않습니다.");
-        }
+        // 새로운 SecurityContext 생성
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-        // 로그인 성공 시 회원 정보 반환
-        return member;
+        // 인증 정보 저장
+        context.setAuthentication(authentication);
+
+        // SecurityContext 적용
+        SecurityContextHolder.setContext(context);
+
+        // 인증된 사용자 정보 반환
+        MemberPrincipal principal = (MemberPrincipal) authentication.getPrincipal();
+        
+        return principal.getMember();
     }
 }

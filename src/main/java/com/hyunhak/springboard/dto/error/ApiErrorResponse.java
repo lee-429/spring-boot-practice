@@ -1,4 +1,4 @@
-package com.hyunhak.springboard.dto;
+package com.hyunhak.springboard.dto.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

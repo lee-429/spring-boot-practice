@@ -1,8 +1,8 @@
 package com.hyunhak.springboard.service;
 
-import com.hyunhak.springboard.dto.BoardCreateDto;
-import com.hyunhak.springboard.dto.BoardResponseDto;
-import com.hyunhak.springboard.dto.BoardUpdateDto;
+import com.hyunhak.springboard.dto.board.BoardCreateDto;
+import com.hyunhak.springboard.dto.board.BoardResponseDto;
+import com.hyunhak.springboard.dto.board.BoardUpdateDto;
 import com.hyunhak.springboard.entity.BoardEntity;
 import com.hyunhak.springboard.entity.MemberEntity;
 import com.hyunhak.springboard.exception.BoardNotFoundException;

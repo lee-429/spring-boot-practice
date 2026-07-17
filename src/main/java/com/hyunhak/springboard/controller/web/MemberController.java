@@ -1,7 +1,7 @@
-package com.hyunhak.springboard.controller;
+package com.hyunhak.springboard.controller.web;
 
-import com.hyunhak.springboard.dto.LoginDto;
-import com.hyunhak.springboard.dto.MemberCreateDto;
+import com.hyunhak.springboard.dto.member.LoginDto;
+import com.hyunhak.springboard.dto.member.MemberCreateDto;
 import com.hyunhak.springboard.entity.MemberEntity;
 import com.hyunhak.springboard.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;

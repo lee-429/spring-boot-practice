@@ -1,4 +1,4 @@
-package com.hyunhak.springboard.dto;
+package com.hyunhak.springboard.dto.board;
 
 import lombok.Getter;
 import lombok.Setter;

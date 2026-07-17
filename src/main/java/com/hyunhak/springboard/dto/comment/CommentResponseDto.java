@@ -1,4 +1,4 @@
-package com.hyunhak.springboard.dto;
+package com.hyunhak.springboard.dto.comment;
 
 import com.hyunhak.springboard.entity.CommentEntity;
 import java.time.LocalDateTime;

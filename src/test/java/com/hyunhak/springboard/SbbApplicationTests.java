@@ -1,6 +1,6 @@
 package com.hyunhak.springboard;
 
-import com.hyunhak.springboard.dto.BoardCreateDto;
+import com.hyunhak.springboard.dto.board.BoardCreateDto;
 import com.hyunhak.springboard.entity.MemberEntity;
 import com.hyunhak.springboard.repository.MemberRepository;
 import com.hyunhak.springboard.service.BoardService;
@@ -19,16 +19,15 @@ public class SbbApplicationTests {
     // 대용량 테스트 데이터 넣기
     @Test
     void testJpa() {
-        for (int i = 1; i < 300; i++) {
+
+        MemberEntity member = memberRepository.findByLoginId("exprim22").orElseThrow();
+
+        for (int i = 1; i <= 300; i++) {
 
             BoardCreateDto dto = new BoardCreateDto();
 
-            dto.setTitle(i + "번째 제목 테스트데이터");
-            dto.setContent(i + "번째 내용 테스트데이터");
-
-            MemberEntity member = memberRepository.findById(1L).orElseThrow();
-
-
+            dto.setTitle("TEST_" + i + "번째 제목 테스트데이터");
+            dto.setContent("TEST_" + i + "번째 내용 테스트데이터");
 
             boardService.save(dto, member);
         }

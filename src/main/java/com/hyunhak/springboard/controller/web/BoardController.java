@@ -1,10 +1,9 @@
-package com.hyunhak.springboard.controller;
+package com.hyunhak.springboard.controller.web;
 
-import com.hyunhak.springboard.dto.BoardCreateDto;
-import com.hyunhak.springboard.dto.BoardResponseDto;
-import com.hyunhak.springboard.dto.BoardUpdateDto;
-import com.hyunhak.springboard.dto.CommentResponseDto;
-import com.hyunhak.springboard.entity.CommentEntity;
+import com.hyunhak.springboard.dto.board.BoardCreateDto;
+import com.hyunhak.springboard.dto.board.BoardResponseDto;
+import com.hyunhak.springboard.dto.board.BoardUpdateDto;
+import com.hyunhak.springboard.dto.comment.CommentResponseDto;
 import com.hyunhak.springboard.entity.MemberEntity;
 import com.hyunhak.springboard.service.BoardService;
 import com.hyunhak.springboard.service.CommentService;
@@ -14,7 +13,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -25,7 +23,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /* @RestController -> JSON 데이터 반환용 (화면 없고 데이터만 반환) */
 @Controller // HTML 화면 반환용 (View로 이동, Model에 데이터 담아서 전달)

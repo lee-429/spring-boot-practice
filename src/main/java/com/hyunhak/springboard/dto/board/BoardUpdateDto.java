@@ -1,4 +1,4 @@
-package com.hyunhak.springboard.dto;
+package com.hyunhak.springboard.dto.board;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

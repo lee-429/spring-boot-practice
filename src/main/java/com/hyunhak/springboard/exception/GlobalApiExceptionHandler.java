@@ -1,6 +1,6 @@
 package com.hyunhak.springboard.exception;
 
-import com.hyunhak.springboard.dto.ApiErrorResponse;
+import com.hyunhak.springboard.dto.error.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

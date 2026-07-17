@@ -1,4 +1,4 @@
-package com.hyunhak.springboard.dto;
+package com.hyunhak.springboard.dto.member;
 
 import com.hyunhak.springboard.entity.MemberEntity;
 import lombok.Getter;

@@ -37,4 +37,6 @@ public class WebConfig implements WebMvcConfigurer {
             // HttpSession 쿠기 전달 허용
             .allowCredentials(true);
     }
+
+
 }

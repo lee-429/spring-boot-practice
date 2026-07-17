@@ -1,8 +1,8 @@
 package com.hyunhak.springboard.service;
 
-import com.hyunhak.springboard.dto.CommentCreateDto;
-import com.hyunhak.springboard.dto.CommentResponseDto;
-import com.hyunhak.springboard.dto.CommentUpdateDto;
+import com.hyunhak.springboard.dto.comment.CommentCreateDto;
+import com.hyunhak.springboard.dto.comment.CommentResponseDto;
+import com.hyunhak.springboard.dto.comment.CommentUpdateDto;
 import com.hyunhak.springboard.entity.BoardEntity;
 import com.hyunhak.springboard.entity.CommentEntity;
 import com.hyunhak.springboard.entity.MemberEntity;
