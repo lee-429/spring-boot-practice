@@ -25,7 +25,6 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    @Autowired // Spring이 자동으로 해당 타입의 객체(Bean)를 찾아서 주입해주는 기능
     public MemberService(
         MemberRepository memberRepository,
         PasswordEncoder passwordEncoder,

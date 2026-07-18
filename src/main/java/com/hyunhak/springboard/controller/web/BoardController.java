@@ -32,7 +32,6 @@ public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
 
-    @Autowired // Spring이 자동으로 해당 타입의 객체(Bean)를 찾아서 주입해주는 기능
     public BoardController(BoardService boardService, CommentService commentService) {
         this.boardService = boardService;
         this.commentService = commentService;

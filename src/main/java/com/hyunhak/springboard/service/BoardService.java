@@ -25,7 +25,6 @@ public class BoardService {
     // 생성자 주입 후 변경할 수 없도록 final 적용
     private final BoardRepository boardRepository;
 
-    @Autowired // Spring이 자동으로 해당 타입의 객체(Bean)를 찾아서 주입해주는 기능
     public BoardService(BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
     }

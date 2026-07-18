@@ -36,7 +36,6 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
-    @Autowired
     public BoardApiController(BoardService boardService) {
         this.boardService = boardService;
     }
