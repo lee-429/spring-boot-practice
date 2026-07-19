@@ -55,11 +55,12 @@ public class SecurityConfig {
             // URL별 접근 권한 설정
             .authorizeHttpRequests(auth -> auth
 
-                // 회원가입, 로그인, 로그아웃은 누구나 접근 가능
+                // 회원가입, 로그인, 로그아웃, 파일 다운로드는 누구나 접근 가능
                 .requestMatchers(
                     "/api/members",
                     "/api/members/login",
-                    "/api/members/logout")
+                    "/api/members/logout",
+                    "/uploads/**")
                 .permitAll()
 
                 // 게시글 조회(GET)는 누구나 가능

@@ -5,6 +5,7 @@ import com.hyunhak.springboard.dto.member.MemberCreateDto;
 import com.hyunhak.springboard.dto.member.MemberResponseDto;
 import com.hyunhak.springboard.dto.member.TokenResponseDto;
 import com.hyunhak.springboard.entity.MemberEntity;
+import com.hyunhak.springboard.security.MemberPrincipal;
 import com.hyunhak.springboard.security.jwt.TokenProvider;
 import com.hyunhak.springboard.service.MemberService;
 import jakarta.validation.Valid;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,4 +75,17 @@ public class MemberApiController {
         return ResponseEntity.ok().build();
     }
 
+    // 로그인한 회원 정보 반환
+    @GetMapping("/me")
+    public MemberResponseDto getMyInfo(
+        // Spring Security에서 인증된 로그인 사용자 정보
+        @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+
+        // MemberPrincipal에서 회원 엔티티 추출
+        MemberEntity member = memberPrincipal.getMember();
+
+        // 회원 정보를 DTO로 변환하여 반환
+        return new MemberResponseDto(member);
+
+    }
 }

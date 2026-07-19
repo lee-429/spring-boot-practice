@@ -33,9 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "DELETE"
             )
             // 모든 헤더 허용
-            .allowedHeaders("*")
-            // HttpSession 쿠기 전달 허용
-            .allowCredentials(true);
+            .allowedHeaders("*");
     }
 
 
