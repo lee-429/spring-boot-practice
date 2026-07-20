@@ -1,13 +1,36 @@
+# ======================
 # Spring Boot
+# ======================
+
 springboard/.gradle/
 springboard/build/
 springboard/.idea/
 springboard/.env
 springboard/uploads/
 
+# ======================
 # React
+# ======================
+
 springboard-front/node_modules/
 springboard-front/dist/
 
+# ======================
 # IDE
+# ======================
+
 *.iml
+.idea/
+
+# ======================
+# OS
+# ======================
+
+.DS_Store
+Thumbs.db
+
+# ======================
+# Logs
+# ======================
+
+*.log
